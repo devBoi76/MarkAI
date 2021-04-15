@@ -1,6 +1,8 @@
 # MarkAI
 Markov chain based AI discord bot written in Java
 
+He learns from messages written on the server that are not sent by a bot or have !markai in them
+
 The .jar is in `target/markov-1.0-SNAPSHOT-jar-with-dependencies.jar`
 
 run with `java -jar markov-1.0-SNAPSHOT-jar-with-dependencies.jar OAUTH TOKEN FOR DISCORD`
