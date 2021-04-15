@@ -15,7 +15,7 @@ public class Main {
         // BOT CODE STARTS
 
         Bot markAI = new Bot();
-        String[] botArgs = {args[1]};
+        String[] botArgs = {args[0]};
         Bot.main(botArgs);
 
         // BOT CODE ENDS
