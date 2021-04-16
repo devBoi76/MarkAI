@@ -36,7 +36,7 @@ public class Utilities {
         MessageChannel channel = inputEevent.getChannel();
         System.out.println("Recieved Message: " + input1.message);
 
-        if(!inputDiscordMessage.getAuthor().isBot() && input1.message.toLowerCase().contains("!markai")) {
+        if(!inputDiscordMessage.getAuthor().isBot() && input1.message.toLowerCase().contains("markai")) {
 
             input1.getFrequency();
             //input1.writeNextWords();
@@ -54,15 +54,18 @@ public class Utilities {
 
             String root = file.getName().replace("next.json", "");
             String outputMessage = "";
-            for (int i = 0; i < random.nextInt(10) + 5; i++) {
+            for (int i = 0; i < random.nextInt(20) + 10; i++) {
                 outputMessage += (root + " ");
                 Word branch = new Word(new Word(root).getBranch());
                 root = branch.root;
+                if(branch.branchFreq.values().size() > 5 && i > 1 && i < 20){
+                    i--;
+                }
 
 
             }
             channel.sendMessage(outputMessage + " ").queue();
-        }else if (!inputDiscordMessage.getAuthor().isBot() && !input1.message.toLowerCase().contains("!markai")){
+        }else if (!inputDiscordMessage.getAuthor().isBot() && !input1.message.toLowerCase().contains("markai")){
             input1.getFrequency();
             input1.writeNextWords();
         }

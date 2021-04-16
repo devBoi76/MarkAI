@@ -22,7 +22,7 @@ public class Bot extends ListenerAdapter
         // All other events will be disabled.
         JDABuilder.createLight(args[0], GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
                 .addEventListeners(new Bot())
-                .setActivity(Activity.playing("Please don't type !MarkAI"))
+                .setActivity(Activity.listening("Everything you say."))
                 .build();
     }
 
@@ -34,16 +34,6 @@ public class Bot extends ListenerAdapter
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // Message msg = event.getMessage();
-       // if (msg.getContentRaw().equals("!ping"))
-       // {
-        //    MessageChannel channel = event.getChannel();
-        //   long time = System.currentTimeMillis();
-        //    channel.sendMessage("Pong!") /* => RestAction<Message> */
-        //            .queue(response /* => Message */ -> {
-        //                response.editMessageFormat("Pong: %d ms", System.currentTimeMillis() - time).queue();
-        //            });
-       // }
     }
 }
 

@@ -47,6 +47,9 @@ public class markMessage {
     // Split the words in message to splitWords
     void splitWordsGet(){
         message.replaceAll(".", " .");
+        message.replaceAll("[*]", "");
+        message.replaceAll("~~", "");
+        message.replaceAll("`", "");
         splitWords = message.trim().split("\\s+");
     }
 
