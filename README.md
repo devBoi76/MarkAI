@@ -12,4 +12,4 @@ To change the bot's status message, change `JDABuilder.createLight(args[0], Gate
                 .setActivity(Activity.playing("CHANGE THIS"))
                 .build();` this
 
-Words are stored in the `words` folder (make sure to make one, was to lazy to code it in), each word has it's own file with weighs. To change what chance a word has to appear after the previous one, change the weigh (higher = more often)
+Words are stored in the `words` folder (make sure to make one, was too lazy to code it in), each word has it's own file with weighs. To change what chance a word has to appear after the previous one, change the weigh (higher = more often)
