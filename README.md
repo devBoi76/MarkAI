@@ -5,7 +5,7 @@ He learns from messages written on the server that are not sent by a bot and don
 
 The .jar is in `target/markov-1.0-SNAPSHOT-jar-with-dependencies.jar`
 
-run with `java -jar markov-1.0-SNAPSHOT-jar-with-dependencies.jar OAUTH TOKEN FOR DISCORD`
+run with `java -jar markov-1.0-SNAPSHOT-jar-with-dependencies.jar BOT TOKEN`
 
 To change the bot's status message, change `JDABuilder.createLight(args[0], GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES)
                 .addEventListeners(new Bot())
