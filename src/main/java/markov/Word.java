@@ -4,9 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 public class Word {
     String root; // The word
@@ -30,23 +28,7 @@ public class Word {
         // Make sure the file isn't empty
         if(!(f.length() == 0)) {
             temp = mapper.readValue(f, branchFreq.getClass());
-        }
-
-        Random random = new Random();
-        // Array of only values fron the HashMap
-        Integer[] valueArray = temp.values().toArray(new Integer[temp.values().size()]);
-
-        if(!(f.length() == 0)) {
-            // All keys (nextwords) fron the HashMap
-            ArrayList<String> l = new ArrayList<String>(temp.keySet());
-            // same as l, but each nextword is repeated the no. of times it appeared after root word
-            ArrayList<String> lrepeated = new ArrayList<>();
-            for(int i = 0; i < random.nextInt(l.size()); i++) {
-                for(int j = 0; j < valueArray[i]; j++) {
-                    lrepeated.add(l.get(i));
-                }
-            }
-            return l.get(random.nextInt(l.size()));
+            return Utilities.weighedRandom(temp);
         }else {
             return ""; // If word's file is empty (no nextwords in it), return a period
         }

@@ -1,5 +1,8 @@
 package markov;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -44,10 +47,31 @@ public class markMessage {
         }
 
     }
+
+    // Save the frequency of the 1st words appearing in messages
+    void saveFirstWord() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        File f = new File("words/BEGIN.json");
+        if(!f.exists()){f.createNewFile();}
+        HashMap<String, Integer> beginnings = new HashMap<>();
+
+        if(f.length() != 0) {
+            beginnings = mapper.readValue(f, beginnings.getClass());
+            if(!beginnings.containsKey(splitWords[0])){
+                beginnings.put(splitWords[0], 1);
+            }else {
+                beginnings.replace(splitWords[0], beginnings.get(splitWords[0]) + 1);
+            }
+        }else{
+            beginnings.put(splitWords[0], 1);
+        }
+        mapper.writeValue(f, beginnings);
+    }
+
     // Split the words in message to splitWords
     void splitWordsGet(){
-        message.replaceAll(".", " .");
-        message.replaceAll("[*]", "");
+        message.replaceAll("\\.", " .");
+        message.replaceAll("\\*", "");
         message.replaceAll("~~", "");
         message.replaceAll("`", "");
         splitWords = message.trim().split("\\s+");
