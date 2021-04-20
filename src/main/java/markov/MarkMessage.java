@@ -9,11 +9,11 @@ import java.util.LinkedList;
 
 import static markov.Utilities.getCount;
 
-public class markMessage {
+public class MarkMessage {
     String message; // The message as a String
     String[] splitWords; // As 1 String per word (split by spaces)
-    HashMap<String, Integer> frequency = new HashMap(); // Frequency of words in message
-    public markMessage(String messageIn){
+    HashMap<String, Integer> frequency = new HashMap<>(); // Frequency of words in message
+    public MarkMessage(String messageIn){
         this.message = messageIn;
     }
 
@@ -22,8 +22,8 @@ public class markMessage {
     // Get word frequency in message
     public void getFrequency(){
         // Makes sure the splitWords isn't empty
-        formatWords();
-        LinkedList distinctWords = new LinkedList();
+        this.splitWords = formatWords(this.message);
+        LinkedList<String> distinctWords = new LinkedList<>();
         // Put words in distinctWords if they don't repeat
         for(int i = 0; i < splitWords.length; i++){
             if(!distinctWords.contains(splitWords[i])){
@@ -42,8 +42,8 @@ public class markMessage {
     // For each word in the message, increment the no. nextword appeared after word by the times it did
     void writeNextWords() throws IOException {
         for(int i = 0; i < this.splitWords.length - 1; i++){
-            Word temp = new Word(this.splitWords[i]);
-            temp.addNextWordToJSON(this.splitWords[i+1]);
+            Word word = new Word(this.splitWords[i]);
+            word.addNextWordToJSON(this.splitWords[i+1]);
         }
 
     }
@@ -69,18 +69,14 @@ public class markMessage {
     }
 
     // Split the words in message to splitWords
-    void formatWords(){
-        message.replaceAll("\\.", " .");
-        message.replaceAll("\\*", "");
-        message.replaceAll("~~", "");
-        message.replaceAll("`", "");
-        message.replaceAll("/", "");
-        splitWords = message.trim().split("\\s+");
-        for(int i = 0; i < splitWords.length; i++){
-            if(splitWords[i].startsWith("<") && splitWords[i].endsWith(">")){
-                splitWords[i].replace("*", "");
-            }
-        }
+    public String[] formatWords(String input){
+        input.replaceAll("\\.", " .");
+        input.replaceAll("[*]", "");
+        input.replaceAll("~~", "");
+        input.replaceAll("`", "");
+        input.replaceAll("/", "");
+        String[] output = message.trim().split("\\s+");
+        return output;
     }
 
 }

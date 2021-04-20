@@ -23,7 +23,7 @@ public class Word {
     public String getBranch() throws IOException {
         f = new File("words/" + root + "next.json");
 
-        HashMap<String, Integer> temp = new HashMap(); // Temporary copy of branchFreq for this function
+        HashMap<String, Integer> temp; // Temporary copy of branchFreq for this function
         ObjectMapper mapper = new ObjectMapper();
         // Make sure the file isn't empty
         if(!(f.length() == 0)) {
@@ -35,18 +35,20 @@ public class Word {
     }
     // Opens the word's file, and adds a String:Integer pair of a word and how many times it appeared
     public void addNextWordToJSON(String nextword) throws IOException {
-        switch (nextword){
-            case("."):
-                System.out.println("can't write " + nextword);
-                return;
+        if (".".equals(nextword)) {
+            System.out.println("can't write " + nextword);
+            return;
         }
+        /*
         if(nextword.toLowerCase().startsWith("<") && nextword.toLowerCase().endsWith(">")){
             System.out.println("Can't write discord stuff " + nextword);
             return;
         }
+         */
 
         f = new File("words/" + root + "next.json");
         ObjectMapper mapper = new ObjectMapper();
+        // DEBUG System.out.println("file: " + f.getPath());
         // If file isn't empty
         if(!(f.length() == 0)) {
             // If file isn't empty

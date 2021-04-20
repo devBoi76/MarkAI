@@ -1,41 +1,43 @@
 package markov;
 
 import javax.security.auth.login.LoginException;
-import java.io.Console;
+import java.io.File;
 import java.io.IOException;
 
+import static java.lang.Integer.parseInt;
+
 public class Main {
-    public static void main(String[] args) throws IOException, LoginException {
-        Console console = System.console();
+    static String token;
+    static Integer minMessageLength;
+    static Integer lengthVariation;
+    static String status;
+    static String triggerPhrase;
+    static Integer maxMessageLength;
 
-        if (console == null) {
-            System.out.println("Console is not available to current JVM process");
-        }
+    public static void main(String[] args) throws LoginException, IOException {
+        // Create Folders
+        new File("words").mkdirs();
+        new File("config").mkdirs();
 
-        // BOT CODE STARTS
+        System.out.println("Token: " + Utilities.loadConfig("Token"));
+        token = Utilities.loadConfig("Token");
 
-        Bot markAI = new Bot();
-        String[] botArgs = {args[0]};
+        System.out.println("MinMessageLength: " + Utilities.loadConfig("MinMessageLength"));
+        minMessageLength = parseInt(Utilities.loadConfig("MinMessageLength"));
+
+        System.out.println("LengthVariation: " + Utilities.loadConfig("LengthVariation"));
+        lengthVariation = parseInt(Utilities.loadConfig("LengthVariation"));
+
+        System.out.println("Status: " + Utilities.loadConfig("Status"));
+        status = Utilities.loadConfig("Status");
+
+        System.out.println("Trigger Phrase: " + Utilities.loadConfig("TriggerPhrase"));
+        triggerPhrase = Utilities.loadConfig("TriggerPhrase");
+
+        System.out.println("MaxMSGLength: " + Utilities.loadConfig("MaxMSGLength"));
+        maxMessageLength = parseInt(Utilities.loadConfig("MaxMSGLength"));
+
+        String[] botArgs = {token, status, triggerPhrase};
         Bot.main(botArgs);
-
-        // BOT CODE ENDS
-        /*
-        markMessage input1 = new markMessage(console.readLine("Enter something: "));
-        input1.getFrequency();
-        input1.writeNextWords();
-
-        Random random = new Random();
-
-        String root = input1.splitWords[random.nextInt(input1.splitWords.length)];
-        System.out.println("BEHOLD! Message: ");
-        for(int i = 0; i < random.nextInt(10) + 20; i++){
-            System.out.print(root + " ");
-            Word branch = new Word(new Word(root).getBranch());
-
-            root = branch.root;
-
-        }
-         */
     }
-
 }
