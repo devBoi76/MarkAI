@@ -37,6 +37,7 @@ public class Utilities {
         markMessage input1 = new markMessage(inputDiscordMessage.getContentRaw());
         MessageChannel channel = inputEevent.getChannel();
         System.out.println("Recieved Message: " + input1.message);
+        input1.formatWords();
 
         if (!inputDiscordMessage.getAuthor().isBot() && input1.message.toLowerCase().contains("markai")) {
 
@@ -52,9 +53,9 @@ public class Utilities {
 
             File file = new File("words/BEGIN.json");
 
-            String root = new String(); //file.getName().replace("next.json", "");
+            String root; //file.getName().replace("next.json", "");
             ObjectMapper mapper = new ObjectMapper();
-            // Array of possible 1st words and their values
+            // Array of possible 1st wo rds and their values
             HashMap<String, Integer> begins = new HashMap<>();
             // Read them
             begins = mapper.readValue(file, begins.getClass());
@@ -65,6 +66,7 @@ public class Utilities {
             // Randomise message length
             for (int i = 0; i < random.nextInt(20) + 10; i++) {
                 outputMessage += (root + " ");
+                System.out.print(root + " ");
                 Word branch = new Word(new Word(root).getBranch());
                 root = branch.root;
                 // Continue message if many options
@@ -75,7 +77,7 @@ public class Utilities {
 
             }
             channel.sendMessage(outputMessage + " ").queue();
-        } else if (!inputDiscordMessage.getAuthor().isBot() && !input1.message.toLowerCase().contains("markai")) {
+        } else if (!inputDiscordMessage.getAuthor().isBot() && !input1.message.toLowerCase().contains("markai") && input1.splitWords.length > 2) {
             input1.getFrequency();
             input1.writeNextWords();
             input1.saveFirstWord();

@@ -22,7 +22,7 @@ public class markMessage {
     // Get word frequency in message
     public void getFrequency(){
         // Makes sure the splitWords isn't empty
-        splitWordsGet();
+        formatWords();
         LinkedList distinctWords = new LinkedList();
         // Put words in distinctWords if they don't repeat
         for(int i = 0; i < splitWords.length; i++){
@@ -69,12 +69,18 @@ public class markMessage {
     }
 
     // Split the words in message to splitWords
-    void splitWordsGet(){
+    void formatWords(){
         message.replaceAll("\\.", " .");
         message.replaceAll("\\*", "");
         message.replaceAll("~~", "");
         message.replaceAll("`", "");
+        message.replaceAll("/", "");
         splitWords = message.trim().split("\\s+");
+        for(int i = 0; i < splitWords.length; i++){
+            if(splitWords[i].startsWith("<") && splitWords[i].endsWith(">")){
+                splitWords[i].replace("*", "");
+            }
+        }
     }
 
 }
