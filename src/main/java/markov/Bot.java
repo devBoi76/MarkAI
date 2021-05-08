@@ -56,7 +56,7 @@ public class Bot extends ListenerAdapter
     }
 
     public void learnMessage(MarkMessage inputMessage) throws IOException {
-        inputMessage.splitWords = inputMessage.formatWords(); // Format and split the words
+        inputMessage.splitWords = Utilities.formatWords(inputMessage.message); // Format and split the words
         inputMessage.writeNextWords();
         inputMessage.saveFirstWord();
     }
@@ -67,13 +67,17 @@ public class Bot extends ListenerAdapter
         Message inputDiscordMessage = event.getMessage();
         MarkMessage inputMessage = new MarkMessage(inputDiscordMessage.getContentRaw());
         MessageChannel inputChannel = event.getChannel();
-        String[] formattedMessage = {};
+        String[] formattedMessage;
+        MarkMessage formattedMarkMessage;
         try {
-             formattedMessage = inputMessage.formatWords();
+             formattedMessage = Utilities.formatWords(inputMessage.message);
+            formattedMarkMessage = new MarkMessage(formattedMessage);
         } catch (IOException e) {
             e.printStackTrace();
+            formattedMessage = new String[0];
+            formattedMarkMessage = new MarkMessage("");
         }
-        MarkMessage formattedMarkMessage = new MarkMessage(formattedMessage);
+        System.out.println("Formatted Message: " + formattedMarkMessage.message);
         System.out.println("Recieved Message: " + inputMessage.message);
         try {
             if (!inputDiscordMessage.getAuthor().isBot() && inputMessage.message.toLowerCase().contains(Main.triggerPhrase)) {

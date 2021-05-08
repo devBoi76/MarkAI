@@ -65,8 +65,26 @@ public class Utilities {
             f.createNewFile();
             System.out.println("Created new empty filter file in config/FILTER");
         }
-        filter = mapper.readValue(f, filter.getClass());
+        if(f.length() != 0) {
+            filter = mapper.readValue(f, filter.getClass());
+        }
         return filter;
+        }
+
+        // Split the words in message to splitWords
+        public static String[] formatWords(String input) throws IOException {
+            input = input.replaceAll("[.]", " ");
+            input = input.replaceAll("[*]", "");
+            input = input.replaceAll("~~", "");
+            input = input.replaceAll("`", "");
+            input = input.replaceAll("/", " ");
+
+            for(int i = 0; i < Main.filter.size(); i++){
+                input = input.replaceAll(Main.filter.get(i), "");
+            }
+
+            String[] output = input.split("\\s+");
+            return output;
         }
     }
 

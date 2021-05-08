@@ -15,16 +15,18 @@ public class MarkMessage {
     }
 
     public MarkMessage(String[] messageIn) {
+        this.message = "";
         for (int i = 0; i < messageIn.length; i++) {
-            this.message += (" " + messageIn[i]);
+            this.message += messageIn[i];
+            this.message += " ";
         }
     }
 
             // For each word in the message, increment the no. nextword appeared after word by the times it did
             void writeNextWords() throws IOException {
                 for(int i = 0; i < this.splitWords.length - 1; i++){
-                    Word word = new Word(this.splitWords[i]);
-                    word.addNextWordToJSON(this.splitWords[i+1]);
+                    Word word = new Word(Utilities.formatWords(this.message)[i]);
+                    word.addNextWordToJSON(Utilities.formatWords(this.message)[i+1]);
                 }
 
             }
@@ -49,21 +51,6 @@ public class MarkMessage {
                 mapper.writeValue(f, beginnings);
             }
 
-            // Split the words in message to splitWords
-            public String[] formatWords() throws IOException {
-                String input = this.message;
-                input.replaceAll("\\.", " .");
-                input.replaceAll("[*]", "");
-                input.replaceAll("~~", "");
-                input.replaceAll("`", "");
-                input.replaceAll("/", "");
 
-                for(int i = 0; i < Main.filter.size(); i++){
-                    input.replaceAll(Main.filter.get(i), "");
-                }
-
-                String[] output = message.trim().split("\\s+");
-                return output;
-            }
 
 }

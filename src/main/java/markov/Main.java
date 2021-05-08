@@ -39,7 +39,7 @@ public class Main {
         maxMessageLength = parseInt(Utilities.loadConfig("MaxMSGLength"));
 
         filter = Utilities.loadFilter();
-
+        System.out.println(filter.toString());
         String[] botArgs = {token, status, triggerPhrase};
         Bot.main(botArgs);
     }
