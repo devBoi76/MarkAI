@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 import static markov.Utilities.getCount;
 
@@ -20,10 +20,10 @@ public class MarkMessage {
 
 
     // Get word frequency in message
-    public void getFrequency(){
+    public void getFrequency() throws IOException {
         // Makes sure the splitWords isn't empty
         this.splitWords = formatWords(this.message);
-        LinkedList<String> distinctWords = new LinkedList<>();
+        ArrayList<String> distinctWords = new ArrayList<>();
         // Put words in distinctWords if they don't repeat
         for(int i = 0; i < splitWords.length; i++){
             if(!distinctWords.contains(splitWords[i])){
@@ -69,12 +69,17 @@ public class MarkMessage {
     }
 
     // Split the words in message to splitWords
-    public String[] formatWords(String input){
+    public String[] formatWords(String input) throws IOException {
         input.replaceAll("\\.", " .");
         input.replaceAll("[*]", "");
         input.replaceAll("~~", "");
         input.replaceAll("`", "");
         input.replaceAll("/", "");
+
+        for(int i = 0; i < Main.filter.size(); i++){
+            input.replaceAll(Main.filter.get(i), "");
+        }
+
         String[] output = message.trim().split("\\s+");
         return output;
     }

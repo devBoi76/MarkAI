@@ -56,5 +56,18 @@ public class Utilities {
             return settingsMap.get(setting);
 
         }
+
+        public static ArrayList<String> loadFilter() throws IOException {
+        File f = new File("config/FILTER");
+        ArrayList<String> filter = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
+        if(!f.exists()){
+            f.createNewFile();
+            System.out.println("Created new empty filter file in config/FILTER");
+        }
+        filter = mapper.readValue(f, filter.getClass());
+        return filter;
+        }
     }
+
 

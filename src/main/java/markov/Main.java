@@ -3,6 +3,7 @@ package markov;
 import javax.security.auth.login.LoginException;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static java.lang.Integer.parseInt;
 
@@ -13,7 +14,7 @@ public class Main {
     static String status;
     static String triggerPhrase;
     static Integer maxMessageLength;
-
+    static ArrayList<String> filter;
     public static void main(String[] args) throws LoginException, IOException {
         // Create Folders
         new File("words").mkdirs();
@@ -36,6 +37,8 @@ public class Main {
 
         System.out.println("MaxMSGLength: " + Utilities.loadConfig("MaxMSGLength"));
         maxMessageLength = parseInt(Utilities.loadConfig("MaxMSGLength"));
+
+        filter = Utilities.loadFilter();
 
         String[] botArgs = {token, status, triggerPhrase};
         Bot.main(botArgs);
