@@ -56,7 +56,7 @@ public class Bot extends ListenerAdapter
     }
 
     public void learnMessage(MarkMessage inputMessage) throws IOException {
-        inputMessage.splitWords = inputMessage.formatWords(inputMessage.message); // Split the words
+        inputMessage.splitWords = inputMessage.formatWords(); // Format and split the words
         inputMessage.writeNextWords();
         inputMessage.saveFirstWord();
     }
@@ -67,6 +67,13 @@ public class Bot extends ListenerAdapter
         Message inputDiscordMessage = event.getMessage();
         MarkMessage inputMessage = new MarkMessage(inputDiscordMessage.getContentRaw());
         MessageChannel inputChannel = event.getChannel();
+        String[] formattedMessage = {};
+        try {
+             formattedMessage = inputMessage.formatWords();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        MarkMessage formattedMarkMessage = new MarkMessage(formattedMessage);
         System.out.println("Recieved Message: " + inputMessage.message);
         try {
             if (!inputDiscordMessage.getAuthor().isBot() && inputMessage.message.toLowerCase().contains(Main.triggerPhrase)) {
@@ -75,9 +82,10 @@ public class Bot extends ListenerAdapter
             // Now that's a long statement!
             if (!inputDiscordMessage.getAuthor().isBot()
                     && !inputMessage.message.toLowerCase().contains(Main.triggerPhrase)
-                    && (inputMessage.formatWords(inputMessage.message).length > 2)
-                    && inputMessage.formatWords(inputMessage.message).length < Main.maxMessageLength) {
-                learnMessage(inputMessage);
+                    && (formattedMessage.length > 2)
+                    && formattedMessage.length < Main.maxMessageLength) {
+
+                learnMessage(formattedMarkMessage);
             } else{
                 return;
             }
